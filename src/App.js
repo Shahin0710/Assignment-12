@@ -1,18 +1,19 @@
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import * as React from 'react';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import PageLogin from './components/PageLogin';
+import PageNotFound from './components/PageNotFound';
+import PageSignUp from './components/PageSignUp';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello world</h1>
-    <Stack direction="row" spacing={2}>
-      <Button>Primary</Button>
-      <Button disabled>Disabled</Button>
-      <Button href="#text-buttons">Link</Button>
-    </Stack>
-    </div>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} /> 
+          <Route path="/signup" element={<PageSignUp />} /> 
+          <Route path="/login" element={<PageLogin />} /> 
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
   );
 }
 
