@@ -116,6 +116,23 @@ const Sidebar = function () {
                         </ListItemButton>
                     </ListItem>
                 </NavLink>
+
+                <NavLink to="/review"
+                    className={
+                        location.pathname === '/review'
+                            ? classes.navLinkActive
+                            : classes.navLink
+                    }
+                >
+                    <ListItem component="div" disablePadding sx={{ mt: 2 }}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <ReportProblemIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='Protect Route' />
+                        </ListItemButton>
+                    </ListItem>
+                </NavLink>
                 </Box>
             </SidebarNav>
         </Drawer>

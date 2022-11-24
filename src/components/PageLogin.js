@@ -15,11 +15,13 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { AuthContext } from '../contexts/UserContext';
 import ComponentsLayout from './common/ComponentsLayout';
 
 const theme = createTheme();
 
 const PageLogin = () => {
+    const { signIn } = React.useContext(AuthContext);
     const navigate = useNavigate()
     const [massage, setMassage] = React.useState('');
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -48,7 +50,26 @@ const PageLogin = () => {
     });
 
     const onSubmit = (values, props) => {
-       console.log('Hello');
+        const formReset = () => {
+            props.resetForm();
+        };
+
+        const email = values.email;
+        const password = values.password;
+
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                formReset();
+                // if(user.emailVerified){
+                navigate(from, {replace: true});
+                // }
+            })
+            .catch(error => {
+                console.error(error)
+                // notifyToast();                
+        })
     }
 
   return (
@@ -68,7 +89,7 @@ const PageLogin = () => {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
               Sign in
             </Typography>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} sx={{ mt: 1 }}>
@@ -88,6 +109,7 @@ const PageLogin = () => {
                     as={TextField}
                     name="password"
                     label="Enter Password"
+                    type="password"
                     fullWidth
                     required
                     error={formik.errors.password && formik.touched.password}

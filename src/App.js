@@ -3,8 +3,10 @@ import PageBlog from './components/PageBlog';
 import PageHome from './components/PageHome';
 import PageLogin from './components/PageLogin';
 import PageNotFound from './components/PageNotFound';
+import PageProtect from './components/PageProtect';
 import PageReport from './components/PageReport';
 import PageSignUp from './components/PageSignUp';
+import ProtectedRoute from './routes/ProtectRoute';
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
           <Route path="/login" element={<PageLogin />} /> 
           <Route path="/blog" element={<PageBlog />} /> 
           <Route path="/report" element={<PageReport />} /> 
+          {/* ProtectedRoute */}
+              <Route path="/review" element={<ProtectedRoute><PageProtect /></ProtectedRoute>} /> 
+          {/* ProtectedRoute */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

@@ -16,12 +16,14 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { AuthContext } from '../contexts/UserContext';
 import ComponentsLayout from './common/ComponentsLayout';
 
 const theme = createTheme();
 
 const PageSignup = () => {
     const navigate = useNavigate();
+    const { createUser, signInWithGoogle, updateUserProfile } = React.useContext(AuthContext);
 
     const [massage, setMassage] = React.useState('');
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -33,7 +35,7 @@ const PageSignup = () => {
       setSnackbarOpen(false);
     };
 
-       const initialValues = {
+    const initialValues = {
         name: '',
         photoURL: '',
         email: '',
@@ -117,7 +119,7 @@ const PageSignup = () => {
                  <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                    <LockOutlinedIcon />
                  </Avatar>
-                 <Typography component="h1" variant="h5">
+                 <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
                    Sign up
                  </Typography>
                   <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -164,7 +166,8 @@ const PageSignup = () => {
                               name="password"
                               required
                               fullWidth
-                              label="Password"
+                              label="password"
+                              type="password"
                               error={formik.errors.password && formik.touched.password}
                               helperText={<ErrorMessage name="password" />}
                             />
@@ -176,6 +179,7 @@ const PageSignup = () => {
                               required
                               fullWidth
                               label="Re-password"
+                              type="password"
                               error={formik.errors.re_password && formik.touched.re_password}
                               helperText={<ErrorMessage name="re_password" />}
                             />
