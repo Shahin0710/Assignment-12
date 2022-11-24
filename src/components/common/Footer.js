@@ -13,7 +13,7 @@ import * as React from 'react';
 const Footer = function () {
     return (
         <footer>
-            <Paper variant="outlined" square sx={{ p: 5, backgroundColor: '#9c27b0', color: 'white'}}>
+            <Paper variant="outlined" square sx={{ p: 5, backgroundColor: '#262626', color: 'white'}}>
                 <Grid container direction="row" justifyContent="space-between" spacing={3}>
                     <Grid item xs={6} md={4}>
                         <List>
@@ -103,7 +103,7 @@ const Footer = function () {
                   <Grid container direction="row" justifyContent="space-between" alignItems="center" spacing={3}>
                       <Grid item xs={12}>
                           <Typography variant="body2" align="center">
-                              {'Copyright © '} 2022 e Learning School Pvt Ltd. All rights reserved.
+                              {'Copyright © '} 2022 Bye & Sell Pvt Ltd. All rights reserved.
                           </Typography>
                       </Grid>
                   </Grid>

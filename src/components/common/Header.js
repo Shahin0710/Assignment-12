@@ -6,10 +6,11 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/SidebarContext';
 
 export default function ButtonAppBar() {
-
+  const navigate = useNavigate();
   const {handleSidebar} = React.useContext(AuthContext);
 
   return (
@@ -29,8 +30,8 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Bye & Sell
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Signup</Button>
+          <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
+          <Button color="inherit" onClick={() => navigate('/signup')}>Signup</Button>
         </Toolbar>
       </AppBar>
       <Toolbar />
