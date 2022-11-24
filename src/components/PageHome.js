@@ -28,16 +28,6 @@ const PageHome = function () {
             <Typography>Page Home</Typography>
             <Typography>Page Home</Typography>
             <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
-            <Typography>Page Home</Typography>
           </Box>
         </ComponentsLayout>
     );

@@ -3,6 +3,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
 import React from 'react';
 import CommonLayout from './CommonLayout';
+import MobileSidebar from './MobileSidebar';
 import Sidebar from './Sidebar';
 
 const ComponentsLayout = ({ children }) => {
@@ -13,9 +14,9 @@ const ComponentsLayout = ({ children }) => {
   return (
     <CommonLayout>
       <Box sx={{ display: 'flex' }}>
-        {matches && <Sidebar />}
+        <Box>{matches ? <Sidebar /> : <MobileSidebar />}</Box>
         <Box sx={{ m: 5, width: '100%' }}>
-          {children}
+            {children}
         </Box>
       </Box>
     </CommonLayout>

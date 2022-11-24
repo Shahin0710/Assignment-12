@@ -6,8 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { AuthContext } from '../../contexts/SidebarContext';
 
 export default function ButtonAppBar() {
+
+  const {handleSidebar} = React.useContext(AuthContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 2 }}>
@@ -17,7 +21,8 @@ export default function ButtonAppBar() {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            onClick={handleSidebar}
+            sx={{ mr: 2, display: { xs: 'flex', md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
