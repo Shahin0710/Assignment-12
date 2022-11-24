@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import * as React from 'react';
-import ComponentsLayout from './ComponentsLayout';
+import ComponentsLayout from './common/ComponentsLayout';
 
 const PageLogin = function () {
     return (
