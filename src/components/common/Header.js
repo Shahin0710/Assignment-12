@@ -7,11 +7,20 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/SidebarContext';
+import { AuthContext as SidebarContext } from '../../contexts/SidebarContext';
+import { AuthContext as UserContext } from '../../contexts/UserContext';
 
 export default function ButtonAppBar() {
   const navigate = useNavigate();
-  const {handleSidebar} = React.useContext(AuthContext);
+  const {handleSidebar} = React.useContext(SidebarContext);
+  const {user, logOut} = React.useContext(UserContext);
+  
+  const handleSignOut = () => {
+    logOut()
+        .then(() => { })
+        .catch(error => console.error(error));
+        navigate('/login');
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -30,8 +39,21 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Bye & Sell
           </Typography>
-          <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
-          <Button color="inherit" onClick={() => navigate('/signup')}>Signup</Button>
+          <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/')}>Home</Button>
+          {user?.email ? 
+              <Button color="inherit" onClick={handleSignOut}>
+                Log out
+              </Button>
+              :
+            <>
+              <Button color="inherit" onClick={() => navigate('/signup')}>
+                Sign up
+              </Button>
+              <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/login')}>
+                Sign in
+              </Button>
+            </>
+          }
         </Toolbar>
       </AppBar>
       <Toolbar />

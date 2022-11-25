@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import PageBlog from './components/PageBlog';
-import PageHome from './components/PageHome';
+import PageHome from './components/pageHome/PageHome';
 import PageLogin from './components/PageLogin';
 import PageNotFound from './components/PageNotFound';
 import PageProtect from './components/PageProtect';
