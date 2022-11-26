@@ -3,33 +3,50 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import ComponentsLayout from '../common/ComponentsLayout';
+import Loading from '../common/Loading';
 import BookedModal from './BookedModal';
-
-const loadData =[
-  { _id: 1, img: 'https://cdn.pixabay.com/photo/2016/04/07/06/53/bmw-1313343_960_720.jpg', item_name: '100cc Bike', category_id: '100', location: 'Dhaka', sale_price: '100', org_price: '200', use_year: '1', posted_time: '01:55', seller: 'Mr Hanif', seller_email: 'sss.10@mail.com' },
-  { _id: 2, img: 'https://cdn.pixabay.com/photo/2015/08/27/09/06/bike-909690_960_720.jpg', item_name: '125cc Bike', category_id: '125', location: 'Barishal', sale_price: '200', org_price: '300', use_year: '1.5', posted_time: '03:50', seller: 'Mr Sharif', seller_email: 'sss.20@mail.com' },
-  { _id: 3, img: 'https://cdn.pixabay.com/photo/2014/09/07/22/33/motorbike-438464_960_720.jpg', item_name: '150cc Bike', category_id: '150', location: 'Jasar', sale_price: '250', org_price: '280', use_year: '1.2', posted_time: '05:32', seller: 'Mr Alif', seller_email: 'sss.10@mail.com' },
-]
 
 const Category = function () {
     const categoryId = useParams();
 
     //  Dialog Open and Close Action Start
+    const [singleId, setSingleId] = React.useState('');
+    const [singleData, setSingleData] = React.useState({});
     const [dialogOpen, setDialogOpen] = React.useState(false);
-    const [dialogDataLoading, setDialogDataLoading] = React.useState(false);
 
     const handleDialogClose = () => {
         setDialogOpen(false);
     };
 
-    const handleDialogViewOpen = () => {
+    const handleDialogViewOpen = (id) => {
         setDialogOpen(true);
-        // setDialogDataLoading(true);
+        setSingleId(id);
     };
     //  Dialog Open and Close Action End
+
+    // DATA LODE USE REACT QUERY
+    const { data: loadData = [], isLoading } = useQuery({
+        queryKey: ['loadData'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:8000/categories');
+            const data = await res.json();
+            return data
+        }
+    });
+
+    React.useEffect( () =>{
+        fetch(`http://localhost:8000/categories/${singleId}`)
+        .then( res => res.json())
+        .then(data => setSingleData(data));
+    }, [singleId])
+
+    if(isLoading){
+        return <Loading />
+    }
 
     return (
         <ComponentsLayout>
@@ -98,7 +115,7 @@ const Category = function () {
                           </Box>
                         </CardContent>
                         <Box display="flex" justifyContent="center" sx={{ mx: 2.5, mb: 2.5 }}>
-                          <Button fullWidth variant="contained" onClick={handleDialogViewOpen}>Book Now</Button>
+                          <Button fullWidth variant="contained" onClick={() => handleDialogViewOpen(item?._id)}>Book Now</Button>
                         </Box>
                       </Card>
                   </Grid>
@@ -106,7 +123,7 @@ const Category = function () {
               </Grid>
           </Box>
           {/* BOOKED NOW MODAL OPEN  */}
-          <BookedModal dialogDataLoading={dialogDataLoading} dialogOpen={dialogOpen} handleDialogClose={handleDialogClose} loadData={loadData[0]} />
+          <BookedModal dialogOpen={dialogOpen} handleDialogClose={handleDialogClose} loadData={singleData} />
         </ComponentsLayout>
     );
 };

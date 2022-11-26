@@ -21,6 +21,7 @@ const PageHome = function () {
 
     // DATA LODE USE REACT QUERY
     const { data: loadData = [], isLoading } = useQuery({
+        queryKey: ['loadData'],
         queryFn: async () => {
             const res = await fetch('http://localhost:8000/service');
             const data = await res.json();
