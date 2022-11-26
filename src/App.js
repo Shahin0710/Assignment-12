@@ -6,7 +6,7 @@ import PageLogin from './components/PageLogin';
 import PageNotFound from './components/PageNotFound';
 import PageReport from './components/PageReport';
 import PageSignUp from './components/PageSignUp';
-import ProtectedRoute from './routes/ProtectRoute';
+import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
@@ -17,9 +17,9 @@ function App() {
           <Route path="/login" element={<PageLogin />} /> 
           <Route path="/blog" element={<PageBlog />} /> 
           <Route path="/report" element={<PageReport />} /> 
-          {/* ProtectedRoute */}
-              <Route path="/category/:id" element={<ProtectedRoute><Category /></ProtectedRoute>} /> 
-          {/* ProtectedRoute */}
+          {/* PrivateRoute */}
+              <Route path="/category/:id" element={<PrivateRoute><Category /></PrivateRoute>} /> 
+          {/* PrivateRoute */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
