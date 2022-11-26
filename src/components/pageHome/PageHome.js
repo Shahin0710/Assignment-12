@@ -4,23 +4,32 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ComponentsLayout from '../common/ComponentsLayout';
+import Loading from '../common/Loading';
 import Advertised from './Advertised';
 import TopBanner from './TopBanner';
-
-const loadData =[
-  { _id: 1, img: 'https://cdn.pixabay.com/photo/2016/04/07/06/53/bmw-1313343_960_720.jpg', name: '100cc Bike', category_id: '100' },
-  { _id: 2, img: 'https://cdn.pixabay.com/photo/2015/08/27/09/06/bike-909690_960_720.jpg', name: '125cc Bike', category_id: '125' },
-  { _id: 3, img: 'https://cdn.pixabay.com/photo/2014/09/07/22/33/motorbike-438464_960_720.jpg', name: '150cc Bike', category_id: '150' },
-]
 
 const PageHome = function () {
     const navigate = useNavigate();
 
     const handleCategoryView = (id) =>{
-        navigate(`/category/${id}`);
+      navigate(`/category/${id}`);
+    }
+
+    // DATA LODE USE REACT QUERY
+    const { data: loadData = [], isLoading } = useQuery({
+        queryFn: async () => {
+            const res = await fetch('http://localhost:8000/service');
+            const data = await res.json();
+            return data
+        }
+    });
+
+    if(isLoading){
+        return <Loading />
     }
 
     return (

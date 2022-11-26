@@ -39,7 +39,12 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Bye & Sell
           </Typography>
-          <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/')}>Dashboard</Button>
+          {user?.email === 'ema55@john.com' ? 
+            <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/admin_dashboard')}>Dashboard</Button>
+              :
+            <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/user_dashboard')}>Dashboard</Button>
+          }
+
           {user?.email ? 
               <Button color="inherit" onClick={handleSignOut}>
                 Log out
