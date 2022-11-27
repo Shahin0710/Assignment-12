@@ -15,7 +15,6 @@ const Category = function () {
 
     //  Dialog Open and Close Action Start
     const [singleId, setSingleId] = React.useState('');
-    const [singleData, setSingleData] = React.useState({});
     const [dialogOpen, setDialogOpen] = React.useState(false);
 
     const handleDialogClose = () => {
@@ -30,19 +29,13 @@ const Category = function () {
 
     // DATA LODE USE REACT QUERY
     const { data: loadData = [], isLoading } = useQuery({
-        queryKey: ['loadData'],
+        queryKey: ['loadData', 'categories'],
         queryFn: async () => {
             const res = await fetch('http://localhost:8000/categories');
             const data = await res.json();
             return data
         }
     });
-
-    React.useEffect( () =>{
-        fetch(`http://localhost:8000/categories/${singleId}`)
-        .then( res => res.json())
-        .then(data => setSingleData(data));
-    }, [singleId])
 
     if(isLoading){
         return <Loading />
@@ -123,7 +116,7 @@ const Category = function () {
               </Grid>
           </Box>
           {/* BOOKED NOW MODAL OPEN  */}
-          <BookedModal dialogOpen={dialogOpen} handleDialogClose={handleDialogClose} loadData={singleData} />
+          <BookedModal dialogOpen={dialogOpen} handleDialogClose={handleDialogClose} singleId={singleId} />
         </ComponentsLayout>
     );
 };

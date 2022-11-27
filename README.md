@@ -6,7 +6,7 @@ https://github.com/programming-hero-web-course-4/b612-used-products-resale-serve
 
 My Assignment_12 website link:
 
-adminEmail: <ema55@john.com>
+adminEmail: <ms86.cool@gmail.com>
 adminPassword: <123456>
 
 Use Package:

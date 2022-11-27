@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+// import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext as SidebarContext } from '../../contexts/SidebarContext';
@@ -21,6 +22,16 @@ export default function ButtonAppBar() {
         .catch(error => console.error(error));
         navigate('/login');
   }
+
+    // // DATA LODE USE REACT QUERY
+    // const { data: loadData = [] } = useQuery({
+    //     queryKey: ['loadData'],
+    //     queryFn: async () => {
+    //         const res = await fetch('http://localhost:8000/users');
+    //         const data = await res.json();
+    //         return data
+    //     }
+    // });
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -42,7 +53,10 @@ export default function ButtonAppBar() {
           {user?.email === 'ema55@john.com' ? 
             <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/admin_dashboard')}>Dashboard</Button>
               :
-            <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/user_dashboard')}>Dashboard</Button>
+            <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/seller_dashboard')}>Dashboard</Button>
+            // {loadData?.filter((option) => option?.role === 'admin').map((item) => (
+            //   <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/admin_dashboard')}>Dashboard</Button>
+            // ))}
           }
 
           {user?.email ? 

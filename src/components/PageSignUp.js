@@ -1,17 +1,15 @@
 import GoogleIcon from '@mui/icons-material/Google';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Box, Grid, MenuItem, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Snackbar from '@mui/material/Snackbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +18,17 @@ import { AuthContext } from '../contexts/UserContext';
 import ComponentsLayout from './common/ComponentsLayout';
 
 const theme = createTheme();
+
+const userRole = [
+    {
+        value: 'seller',
+        label: 'As a Seller',
+    },
+    {
+        value: 'bayer',
+        label: 'As a Bayer',
+    },
+];
 
 const PageSignup = () => {
     const navigate = useNavigate();
@@ -39,6 +48,7 @@ const PageSignup = () => {
         name: '',
         photoURL: '',
         email: '',
+        role: '',
         password: '',
         re_password: '',
     };
@@ -53,6 +63,7 @@ const PageSignup = () => {
             .max(500, 'Maximum characters should be 500')
             .required('Name is required'),
         email: Yup.string().email('Enter valid email').required('Email is required'),
+        role: Yup.string().required('This is required'),
         password: Yup.string()
             .min(6, 'Minimum characters should be 6')
             .max(10, 'Maximum characters should be 10')
@@ -66,24 +77,25 @@ const PageSignup = () => {
         const formReset = () => {
             props.resetForm();
         };
-    const name = values.name;
-    const photoURL = values.photoURL;
-    const email = values.email;
-    const password = values.password;
-    
-    createUser(email, password)
-        .then(result => {
-            formReset();
-            handleUpdateUserProfile(name, photoURL);
-            navigate('/');
-        })
-        .catch(error => {
-            setMassage(error.message);
-            setSnackbarOpen(true);
-        })
-  };
+      const name = values.name;
+      const photoURL = values.photoURL;
+      const email = values.email;
+      const role = values.role;
+      const password = values.password;
+      
+      createUser(email, password)
+          .then(result => {
+              formReset();
+              handleUpdateUserProfile(name, photoURL);
+              saveUser(role, email, name);
+          })
+          .catch(error => {
+              setMassage(error.message);
+              setSnackbarOpen(true);
+          })
+    };
 
-    const handleUpdateUserProfile = (name, photoURL) => {
+      const handleUpdateUserProfile = (name, photoURL) => {
       const profile = {
           displayName: name,
           photoURL: photoURL
@@ -91,16 +103,32 @@ const PageSignup = () => {
       updateUserProfile(profile)
           .then(() => { })
           .catch(error => console.error(error));
-  }
+    }
 
-   const handleGoogleSignIn = () => {
+     const handleGoogleSignIn = () => {
       signInWithGoogle()
       .then( result => {
           const user = result.user;
           console.log(user);
       })
       .catch(error => console.error(error));
-  }
+    }
+
+    const saveUser = (role, email, name) =>{
+      const user ={role, email, name};
+      fetch('http://localhost:8000/users', {
+          method: 'POST',
+          headers: {
+              'content-type': 'application/json'
+          },
+          body: JSON.stringify(user)
+      })
+      .then(res => res.json())
+      .then(data =>{
+          console.log(data);
+          navigate('/');
+      })
+    }
 
   return (
     <ComponentsLayout>
@@ -127,7 +155,7 @@ const PageSignup = () => {
                       <Form noValidate>
                         <Box>
                         <Grid container spacing={2}>
-                          <Grid item xs={12} sm={12}>
+                          <Grid item xs={12} md={6}>
                             <Field
                               as={TextField}
                               name="name"
@@ -138,7 +166,7 @@ const PageSignup = () => {
                               helperText={<ErrorMessage name="name" />}
                             />
                           </Grid>
-                          <Grid item xs={12} sm={12}>
+                          <Grid item xs={12} md={6}>
                             <Field
                               as={TextField}
                               name="photoURL"
@@ -149,7 +177,7 @@ const PageSignup = () => {
                               helperText={<ErrorMessage name="photoURL" />}
                             />
                           </Grid>
-                          <Grid item xs={12}>
+                          <Grid item xs={12} md={6}>
                             <Field
                               as={TextField}
                               name="email"
@@ -160,7 +188,25 @@ const PageSignup = () => {
                               helperText={<ErrorMessage name="email" />}
                             />
                           </Grid>
-                          <Grid item xs={12}>
+                          <Grid item xs={12} md={6}>
+                          <Field
+                              as={TextField}
+                              select
+                              label="Your Role"
+                              fullWidth
+                              required
+                              name="role"
+                              error={formik.errors.role && formik.touched.role}
+                              helperText={<ErrorMessage name="role" />}
+                          >
+                              {userRole.map((option) => (
+                                  <MenuItem key={option.value} value={option.value}>
+                                      {option.label}
+                                  </MenuItem>
+                              ))}
+                          </Field>
+                          </Grid>
+                          <Grid item xs={12} md={6}>
                             <Field
                               as={TextField}
                               name="password"
@@ -172,7 +218,7 @@ const PageSignup = () => {
                               helperText={<ErrorMessage name="password" />}
                             />
                           </Grid>
-                          <Grid item xs={12}>
+                          <Grid item xs={12} md={6}>
                             <Field
                               as={TextField}
                               name="re_password"

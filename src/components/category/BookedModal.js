@@ -5,11 +5,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
+import Loading from '../common/Loading';
 
-const BookedModal = function ({ dialogOpen, handleDialogClose, loadData }) {
+const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
+
+    // DATA LODE USE REACT QUERY
+    const { data: loadData = {}, isLoading } = useQuery({
+        queryKey: ['loadData', singleId],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:8000/categories/${singleId}`);
+            const data = await res.json();
+            return data
+        }
+    });
 
     const initialValues = {
         seller_name: loadData?.seller,
@@ -41,6 +53,10 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, loadData }) {
         
         console.log(phone);      
         console.log(meeting_location);
+    }
+
+    if(isLoading){
+        return <Loading />
     }
 
     return (
