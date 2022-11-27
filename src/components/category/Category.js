@@ -3,6 +3,9 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
 import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
@@ -58,6 +61,9 @@ const Category = function () {
                           <Typography gutterBottom variant="h5" component="div">
                             {item?.item_name}
                           </Typography>
+                          <FormGroup>
+                            <FormControlLabel control={<Checkbox defaultChecked={true} />} label="User Verified" />
+                          </FormGroup>
                           <Box display="flex" justifyContent="space-between">
                               <Typography gutterBottom variant="h6" component="div">
                                 Location:

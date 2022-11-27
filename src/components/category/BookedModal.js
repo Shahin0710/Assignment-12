@@ -4,14 +4,26 @@ import Button from '@mui/material/Button';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
+import { AuthContext } from '../../contexts/UserContext';
+import AlertMessage from '../common/AlertMessage';
 import Loading from '../common/Loading';
 
 const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
+    const {user} = React.useContext(AuthContext);
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setSnackbarOpen(false);
+    };
 
     // DATA LODE USE REACT QUERY
     const { data: loadData = {}, isLoading } = useQuery({
@@ -24,8 +36,8 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
     });
 
     const initialValues = {
-        seller_name: loadData?.seller,
-        seller_email: loadData?.seller_email,
+        seller_name: user?.displayName,
+        seller_email: user?.email,
         item_name: loadData?.item_name,
         price: loadData?.sale_price,
         phone: '',
@@ -50,15 +62,17 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
 
         const phone = values.phone;
         const meeting_location = values.meeting_location;
-        
         console.log(phone);      
         console.log(meeting_location);
+        formReset();
+        handleDialogClose();
+        setSnackbarOpen(true);
     }
 
     if(isLoading){
         return <Loading />
     }
-
+    
     return (
         <>
           <Dialog open={dialogOpen} onClose={() => handleDialogClose()}>
@@ -88,7 +102,7 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
                               sx={{ mb: 5 }}
                               as={TextField}
                               name="seller_name"
-                              label="Seller Name"
+                              label="User Name"
                               disabled
                               fullWidth
                             />
@@ -96,7 +110,7 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
                               sx={{ mb: 5 }}
                               as={TextField}
                               name="seller_email"
-                              label="Seller Email"
+                              label="User Email"
                               disabled
                               fullWidth
                             />
@@ -151,6 +165,13 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
                   </DialogContentText>
               </DialogContent>
           </Dialog>
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            message='Successfully Submitted'
+            action={<AlertMessage handleClose={handleClose} />}
+          />
         </>
     );
 };

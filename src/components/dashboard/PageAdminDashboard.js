@@ -9,17 +9,19 @@ import CardHeader from '@mui/material/CardHeader';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
-// import Snackbar from '@mui/material/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 import Stack from '@mui/material/Stack';
 import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
+import AlertMessage from '../common/AlertMessage';
 import ComponentsLayout from '../common/ComponentsLayout';
+import DeleteDialogBoxOpen from '../common/DeleteDialogBoxOpen';
 import Loading from '../common/Loading';
 
 const PageAdminDashboard = function () {
 
     // DATA LODE USE REACT QUERY
-    const { data: loadData = [], isLoading } = useQuery({
+    const { data: loadData = [], isLoading, refetch } = useQuery({
         queryKey: ['loadData', 'users'],
         queryFn: async () => {
             const res = await fetch('http://localhost:8000/users');
@@ -27,6 +29,46 @@ const PageAdminDashboard = function () {
             return data
         }
     });
+
+    //  DELETE DIALOG BOX OPEN ACTION
+    const [deleteOpenBox, setDeleteOpenBox] = React.useState(false);
+    const [serviceId, setServiceId] = React.useState('');
+
+    const handleDeleteNo = () => {
+        setDeleteOpenBox(false);
+    };
+
+    const handleDeleteYes = () => {
+        fetch(`http://localhost:8000/users_delete/${serviceId}`, {
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            refetch();
+            setDeleteOpenBox(false);
+            setMassage('Successfully Deleted');
+            setSnackbarOpen(true);
+        });
+    };
+
+    const handleDelete = (id) => {
+        setServiceId(id);
+        setDeleteOpenBox(true);
+    };
+    //  DELETE DIALOG BOX CLOSE ACTION
+    
+    //  DELETE SUCCESS ALERT ACTION START
+    const [massage, setMassage] = React.useState('');
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setSnackbarOpen(false);
+    };
+    //  DELETE SUCCESS ALERT ACTION END
 
     if(isLoading){
       return <Loading />
@@ -71,7 +113,7 @@ const PageAdminDashboard = function () {
                                 </CardContent>
                                 <CardActions sx={{ mb: 2 }}>
                                   <Stack direction="row" spacing={2}>
-                                    <Button variant="outlined" size="small" color="error" startIcon={<DeleteIcon />}>
+                                    <Button onClick={() => handleDelete(item?._id)} variant="outlined" size="small" color="error" startIcon={<DeleteIcon />}>
                                         Delete
                                     </Button>
                                   </Stack>
@@ -82,15 +124,15 @@ const PageAdminDashboard = function () {
                     </Grid>
                   </Box>
                   {/* DELETE DIALOG BOX OPEN */}
-                {/* <DeleteDialogBoxOpen deleteOpenBox={deleteOpenBox} handleDeleteNo={handleDeleteNo} handleDeleteYes={handleDeleteYes} /> */}
+                <DeleteDialogBoxOpen deleteOpenBox={deleteOpenBox} handleDeleteNo={handleDeleteNo} handleDeleteYes={handleDeleteYes} />
                   {/* DELETE SUCCESS MASSAGE */}
-                {/* <Snackbar
+                <Snackbar
                     open={snackbarOpen}
                     autoHideDuration={6000}
                     onClose={handleClose}
                     message={massage}
                     action={<AlertMessage handleClose={handleClose} />}
-                />  */}
+                /> 
               </Box>
           )}
           </Box>
