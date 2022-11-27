@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-// import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext as SidebarContext } from '../../contexts/SidebarContext';
@@ -23,15 +23,17 @@ export default function ButtonAppBar() {
         navigate('/login');
   }
 
-    // // DATA LODE USE REACT QUERY
-    // const { data: loadData = [] } = useQuery({
-    //     queryKey: ['loadData'],
-    //     queryFn: async () => {
-    //         const res = await fetch('http://localhost:8000/users');
-    //         const data = await res.json();
-    //         return data
-    //     }
-    // });
+    // DATA LODE USE REACT QUERY
+    const { data: loadData = [] } = useQuery({
+        queryKey: ['loadData', 'users'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:8000/users');
+            const data = await res.json();
+            return data
+          }
+        });
+
+    const userRole = loadData.filter((option) => option.email === user?.email)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -50,13 +52,19 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Bye & Sell
           </Typography>
-          {user?.email === 'ema55@john.com' ? 
+          {userRole[0]?.role === 'admin' ? 
             <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/admin_dashboard')}>Dashboard</Button>
               :
-            <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/seller_dashboard')}>Dashboard</Button>
-            // {loadData?.filter((option) => option?.role === 'admin').map((item) => (
-            //   <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/admin_dashboard')}>Dashboard</Button>
-            // ))}
+            <Box>
+              {userRole[0]?.role === 'seller' ?
+                <Box>
+                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/seller_dashboard')}>My Product</Button>
+                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/seller_dashboard_add')}>Add</Button>
+                </Box>
+                  :
+                <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/bayer_dashboard')}>My Order</Button>
+              }
+            </Box>
           }
 
           {user?.email ? 

@@ -15,6 +15,8 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/UserContext';
+import useToken from '../hooks/useToken';
+import AlertMessage from './common/AlertMessage';
 import ComponentsLayout from './common/ComponentsLayout';
 
 const theme = createTheme();
@@ -36,6 +38,13 @@ const PageSignup = () => {
 
     const [massage, setMassage] = React.useState('');
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
+    const [createdUserEmail, setCreatedUserEmail] = React.useState('')
+    const [token] = useToken(createdUserEmail);
+
+    if(token){
+      navigate('/');
+    }
 
     const handleClose = (event, reason) => {
       if (reason === 'clickaway') {
@@ -125,8 +134,7 @@ const PageSignup = () => {
       })
       .then(res => res.json())
       .then(data =>{
-          console.log(data);
-          navigate('/');
+          setCreatedUserEmail(email);
       })
     }
 
@@ -272,7 +280,7 @@ const PageSignup = () => {
         autoHideDuration={6000}
         onClose={handleClose}
         message={massage}
-        // action={<AlertMessage handleClose={handleClose} />}
+        action={<AlertMessage handleClose={handleClose} />}
       />
     </ComponentsLayout>
   )

@@ -16,25 +16,34 @@ import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AuthContext } from '../contexts/UserContext';
+import useToken from '../hooks/useToken';
+import AlertMessage from './common/AlertMessage';
 import ComponentsLayout from './common/ComponentsLayout';
 
 const theme = createTheme();
 
 const PageLogin = () => {
     const { signIn } = React.useContext(AuthContext);
-    const navigate = useNavigate()
     const [massage, setMassage] = React.useState('');
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
+    const [loginUserEmail, setLoginUserEmail] = React.useState('');
+    const [token] = useToken(loginUserEmail);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
+
+    if(token){
+      navigate(from, {replace: true});
+    }
+    
     const handleClose = (event, reason) => {
       if (reason === 'clickaway') {
         return;
       }
       setSnackbarOpen(false);
     };
-
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
 
     const initialValues = {
         email: '',
@@ -62,13 +71,11 @@ const PageLogin = () => {
                 const user = result.user;
                 console.log(user);
                 formReset();
-                // if(user.emailVerified){
-                navigate(from, {replace: true});
-                // }
+                setLoginUserEmail(email);
             })
             .catch(error => {
                 console.error(error)
-                // notifyToast();                
+                setMassage(error.message);
         })
     }
 
@@ -150,7 +157,7 @@ const PageLogin = () => {
         autoHideDuration={6000}
         onClose={handleClose}
         message={massage}
-        // action={<AlertMessage handleClose={handleClose} />}
+        action={<AlertMessage handleClose={handleClose} />}
       />
     </ComponentsLayout>
   )

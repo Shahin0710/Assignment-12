@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Category from './components/category/Category';
+import AddSeller from './components/dashboard/AddSeller';
 import PageAdminDashboard from './components/dashboard/PageAdminDashboard';
 import PageBayerDashboard from './components/dashboard/PageBayerDashboard';
 import PageSellerDashboard from './components/dashboard/PageSellerDashboard';
@@ -24,6 +25,7 @@ function App() {
             <Route path="/category/:id" element={<PrivateRoute><Category /></PrivateRoute>} /> 
             <Route path="/admin_dashboard" element={<PrivateRoute><PageAdminDashboard /></PrivateRoute>} /> 
             <Route path="/seller_dashboard" element={<PrivateRoute><PageSellerDashboard /></PrivateRoute>} /> 
+            <Route path="/seller_dashboard_add" element={<PrivateRoute><AddSeller /></PrivateRoute>} /> 
             <Route path="/bayer_dashboard" element={<PrivateRoute><PageBayerDashboard /></PrivateRoute>} /> 
           {/* PrivateRoute */}
           <Route path="*" element={<PageNotFound />} />
