@@ -67,6 +67,7 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
         formReset();
         handleDialogClose();
         setSnackbarOpen(true);
+        localStorage.setItem('bookedItem', singleId);
     }
 
     if(isLoading){
