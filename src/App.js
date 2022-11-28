@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Category from './components/category/Category';
-import AddSeller from './components/dashboard/AddSeller';
+import PageAddProduct from './components/dashboard/PageAddProduct';
 import PageAdminDashboard from './components/dashboard/PageAdminDashboard';
-import PageBayerDashboard from './components/dashboard/PageBayerDashboard';
-import PageSellerDashboard from './components/dashboard/PageSellerDashboard';
+import PageMyOrder from './components/dashboard/PageMyOrder';
+import PageMyProduct from './components/dashboard/PageMyProduct';
 import PageBlog from './components/PageBlog';
 import PageHome from './components/pageHome/PageHome';
 import PageLogin from './components/PageLogin';
@@ -24,9 +24,9 @@ function App() {
           {/* PrivateRoute */}
             <Route path="/category/:id" element={<PrivateRoute><Category /></PrivateRoute>} /> 
             <Route path="/admin_dashboard" element={<PrivateRoute><PageAdminDashboard /></PrivateRoute>} /> 
-            <Route path="/seller_dashboard" element={<PrivateRoute><PageSellerDashboard /></PrivateRoute>} /> 
-            <Route path="/seller_dashboard_add" element={<PrivateRoute><AddSeller /></PrivateRoute>} /> 
-            <Route path="/bayer_dashboard" element={<PrivateRoute><PageBayerDashboard /></PrivateRoute>} /> 
+            <Route path="/my_product" element={<PrivateRoute><PageMyProduct /></PrivateRoute>} /> 
+            <Route path="/add_product" element={<PrivateRoute><PageAddProduct /></PrivateRoute>} /> 
+            <Route path="/my_order" element={<PrivateRoute><PageMyOrder /></PrivateRoute>} /> 
           {/* PrivateRoute */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>

@@ -2,14 +2,14 @@ import { Box, Typography } from '@mui/material';
 import * as React from 'react';
 import ComponentsLayout from '../common/ComponentsLayout';
 
-const PageSellerDashboard = function () {
+const PageMyProduct = function () {
     return (
         <ComponentsLayout>
           <Box sx={{ mb: 5 }}>
-            <Typography>seller Dashboard</Typography>
+            <Typography>My Product</Typography>
           </Box>
         </ComponentsLayout>
     );
 };
 
-export default PageSellerDashboard;
+export default PageMyProduct;

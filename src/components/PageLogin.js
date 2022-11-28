@@ -74,8 +74,9 @@ const PageLogin = () => {
                 setLoginUserEmail(email);
             })
             .catch(error => {
-                console.error(error)
                 setMassage(error.message);
+                formReset();
+                setSnackbarOpen(true);
         })
     }
 

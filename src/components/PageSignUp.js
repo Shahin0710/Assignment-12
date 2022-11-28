@@ -100,6 +100,7 @@ const PageSignup = () => {
           })
           .catch(error => {
               setMassage(error.message);
+              formReset();
               setSnackbarOpen(true);
           })
     };

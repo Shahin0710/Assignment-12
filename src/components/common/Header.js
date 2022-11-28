@@ -58,11 +58,11 @@ export default function ButtonAppBar() {
             <Box>
               {userRole[0]?.role === 'seller' ?
                 <Box>
-                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/seller_dashboard')}>My Product</Button>
-                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/seller_dashboard_add')}>Add</Button>
+                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/my_product')}>My Product</Button>
+                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/add_product')}>Add</Button>
                 </Box>
                   :
-                <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/bayer_dashboard')}>My Order</Button>
+                <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/my_order')}>My Order</Button>
               }
             </Box>
           }

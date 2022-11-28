@@ -12,7 +12,7 @@ const AlertMessage = ({handleClose}) => {
       <IconButton
         size="small"
         aria-label="close"
-        color="inherit"
+        color="secondary"
         onClick={handleClose}
       >
         <CloseIcon fontSize="small" />
