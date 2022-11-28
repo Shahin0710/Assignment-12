@@ -10,6 +10,7 @@ import PageLogin from './components/PageLogin';
 import PageNotFound from './components/PageNotFound';
 import PageReport from './components/PageReport';
 import PageSignUp from './components/PageSignUp';
+import Payment from './components/payment/Payment';
 import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/my_product" element={<PrivateRoute><PageMyProduct /></PrivateRoute>} /> 
             <Route path="/add_product" element={<PrivateRoute><PageAddProduct /></PrivateRoute>} /> 
             <Route path="/my_order" element={<PrivateRoute><PageMyOrder /></PrivateRoute>} /> 
+            <Route path="/payment/:id" element={<PrivateRoute><Payment /></PrivateRoute>} /> 
           {/* PrivateRoute */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>

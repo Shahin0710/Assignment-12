@@ -38,7 +38,12 @@ const PageMyOrder = function () {
         }
     });
 
-    const handleDeleteYes = () => {
+    const handlePayment = (id) => {
+      setSnackbarOpen(true);
+      navigate(`/payment/${id}`);
+    };
+
+    const handleDelete = () => {
       localStorage.removeItem('bookedItem');
       navigate('/');
       setSnackbarOpen(true);
@@ -79,8 +84,8 @@ const PageMyOrder = function () {
                               {item?.item_name}
                             </Typography>
                             <Stack direction="row" spacing={2} sx={{ my: 2 }}>
-                                <Button variant="outlined" size="small" color="secondary" startIcon={<MonetizationOnIcon />}>Payment</Button>
-                                <Button onClick={handleDeleteYes} variant="outlined" size="small" color="error" startIcon={<DeleteIcon />}>Delete</Button>
+                                <Button onClick={() => handlePayment(item?._id)} variant="outlined" size="small" color="secondary" startIcon={<MonetizationOnIcon />}>Payment</Button>
+                                <Button onClick={handleDelete} variant="outlined" size="small" color="error" startIcon={<DeleteIcon />}>Delete</Button>
                             </Stack>
                             <Box display="flex" justifyContent="space-between">
                                 <Typography gutterBottom variant="h6" component="div">
