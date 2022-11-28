@@ -9,12 +9,14 @@ import TextField from '@mui/material/TextField';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
+// import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AuthContext } from '../../contexts/UserContext';
 import AlertMessage from '../common/AlertMessage';
 import Loading from '../common/Loading';
 
 const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
+    // const navigate = useNavigate();
     const {user} = React.useContext(AuthContext);
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
@@ -68,6 +70,7 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
         handleDialogClose();
         setSnackbarOpen(true);
         localStorage.setItem('bookedItem', singleId);
+        // navigate('/my_order');
     }
 
     if(isLoading){
