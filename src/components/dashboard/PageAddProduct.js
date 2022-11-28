@@ -4,7 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { AuthContext } from '../../contexts/UserContext';
 import AlertMessage from '../common/AlertMessage';
@@ -41,7 +41,7 @@ const productCondition = [
 ];
 
 const PageAddProduct = function () { 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const { user } = React.useContext(AuthContext);
     const [massage, setMassage] = React.useState('');
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
@@ -111,24 +111,24 @@ const PageAddProduct = function () {
 
           saveProduct(item_name, category_id, sale_price, org_price, condition , mobile, location, description , use_year, img, posted_time, seller, seller_email);
           formReset();
-          setMassage('Successfully added');
-          setSnackbarOpen(true);
     };
 
     const saveProduct = (item_name, category_id, sale_price, org_price, condition , mobile, location, description , use_year, img, posted_time, seller, seller_email) =>{
       const product ={item_name, category_id, sale_price, org_price, condition , mobile, location, description , use_year, img, posted_time, seller, seller_email};
-      // fetch('http://localhost:8000/users', {
-      //     method: 'POST',
-      //     headers: {
-      //         'content-type': 'application/json'
-      //     },
-      //     body: JSON.stringify(product)
-      // })
-      // .then(res => res.json())
-      // .then(data =>{
-      //   console.log(data);
-      // })
-      console.log(product);
+      fetch('http://localhost:8000/categories_add', {
+          method: 'POST',
+          headers: {
+              'content-type': 'application/json'
+          },
+          body: JSON.stringify(product)
+      })
+      .then(res => res.json())
+      .then(data =>{
+          console.log(data);
+          setMassage('Successfully added');
+          setSnackbarOpen(true);
+          navigate('/my_product');
+      })
     }
 
     return (
@@ -279,7 +279,7 @@ const PageAddProduct = function () {
                         <Grid item xs={12} md={6}>
                           <Box sx={{ display: 'flex' }}>
                             <Button type="submit" variant="contained" sx={{ mr: 3 }}>Submit</Button>
-                            <Button variant="contained">Cancel</Button>
+                            <Button onClick={formik.resetForm} variant="contained">Cancel</Button>
                           </Box>
                         </Grid>
                       </Grid>
