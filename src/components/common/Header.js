@@ -1,3 +1,4 @@
+import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -59,7 +60,7 @@ export default function ButtonAppBar() {
               {userRole[0]?.role === 'seller' ?
                 <Box>
                   <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/my_product')}>My Product</Button>
-                  <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/add_product')}>Add</Button>
+                  <Button startIcon={<AddIcon />} color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/add_product')}>Add</Button>
                 </Box>
                   :
                 <Button color="inherit" sx={{ ml: 1.5 }} onClick={() => navigate('/my_order')}>My Order</Button>
