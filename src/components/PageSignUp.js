@@ -126,7 +126,7 @@ const PageSignup = () => {
 
     const saveUser = (role, email, name) =>{
       const user ={role, email, name};
-      fetch('http://localhost:8000/users', {
+      fetch('https://resale-market-server-side-sigma.vercel.app/users', {
           method: 'POST',
           headers: {
               'content-type': 'application/json'

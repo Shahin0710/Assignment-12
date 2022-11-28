@@ -64,14 +64,6 @@ const CheckoutForm = () => {
                 Pay
             </Button>
         </Box>
-
-        {/* <p className="text-red-500">{cardError}</p> */}
-        {/* {
-          success && <div>
-              <p className='text-green-500'>{success}</p>
-              <p>Your transactionId: <span className='font-bold'>{transactionId}</span></p>
-          </div>
-        } */}
         {/* SNACKBAR MASSAGE  */}
         <Snackbar
           open={snackbarOpen}

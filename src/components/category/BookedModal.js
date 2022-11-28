@@ -31,7 +31,7 @@ const BookedModal = function ({ dialogOpen, handleDialogClose, singleId }) {
     const { data: loadData = {}, isLoading } = useQuery({
         queryKey: ['loadData', singleId],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:8000/categories/${singleId}`);
+            const res = await fetch(`https://resale-market-server-side-sigma.vercel.app/categories/${singleId}`);
             const data = await res.json();
             return data
         }

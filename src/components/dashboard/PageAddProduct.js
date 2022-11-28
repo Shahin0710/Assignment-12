@@ -115,7 +115,7 @@ const PageAddProduct = function () {
 
     const saveProduct = (item_name, category_id, sale_price, org_price, condition , mobile, location, description , use_year, img, posted_time, seller, seller_email) =>{
       const product ={item_name, category_id, sale_price, org_price, condition , mobile, location, description , use_year, img, posted_time, seller, seller_email};
-      fetch('http://localhost:8000/categories_add', {
+      fetch('https://resale-market-server-side-sigma.vercel.app/categories_add', {
           method: 'POST',
           headers: {
               'content-type': 'application/json'

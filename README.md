@@ -5,6 +5,7 @@ Server Side Private repo link:
 https://github.com/programming-hero-web-course-4/b612-used-products-resale-server-side-Shahin0710
 
 My Assignment_12 website link:
+https://resale-market-c7e53.web.app/
 
 adminEmail: <ms86.cool@gmail.com>
 adminPassword: <123456>

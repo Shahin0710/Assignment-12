@@ -23,7 +23,7 @@ const PageHome = function () {
     const { data: loadData = [], isLoading } = useQuery({
         queryKey: ['loadData', 'service'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:8000/service');
+            const res = await fetch('https://resale-market-server-side-sigma.vercel.app/service');
             const data = await res.json();
             return data
         }

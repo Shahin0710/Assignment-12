@@ -17,7 +17,7 @@ const Payment = () => {
     const { data: loadData = {}, isLoading } = useQuery({
         queryKey: ['loadData', categoryId?.id],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:8000/categories/${categoryId?.id}`);
+            const res = await fetch(`https://resale-market-server-side-sigma.vercel.app/categories/${categoryId?.id}`);
             const data = await res.json();
             return data
         }
@@ -33,7 +33,6 @@ const Payment = () => {
     <ComponentsLayout>
       <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>Payment</Typography>
       <Elements stripe={stripePromise}>
-          {/* <CheckoutForm booking={booking}/> */}
           <CheckoutForm />
       </Elements>
     </ComponentsLayout>

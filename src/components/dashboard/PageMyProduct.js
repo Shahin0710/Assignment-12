@@ -22,7 +22,7 @@ const PageMyProduct = function () {
     const { data: loadData = [], isLoading, refetch } = useQuery({
         queryKey: ['loadData', 'categories'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:8000/categories');
+            const res = await fetch('https://resale-market-server-side-sigma.vercel.app/categories');
             const data = await res.json();
             return data
         }
@@ -37,7 +37,7 @@ const PageMyProduct = function () {
     };
 
     const handleDeleteYes = () => {
-        fetch(`http://localhost:8000/categories/delete/${serviceId}`, {
+        fetch(`https://resale-market-server-side-sigma.vercel.app/categories/delete/${serviceId}`, {
             method: 'DELETE',
         })
         .then(res => res.json())

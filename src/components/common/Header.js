@@ -28,7 +28,7 @@ export default function ButtonAppBar() {
     const { data: loadData = [] } = useQuery({
         queryKey: ['loadData', 'users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:8000/users');
+            const res = await fetch('https://resale-market-server-side-sigma.vercel.app/users');
             const data = await res.json();
             return data
           }
